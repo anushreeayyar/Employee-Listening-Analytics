@@ -17,6 +17,8 @@ import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import os
+import sys
+import subprocess
 
 # ─── PAGE CONFIG ──────────────────────────────────────────────────────────────
 
@@ -26,6 +28,18 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
+
+# ─── AUTO-GENERATE DATA IF MISSING ───────────────────────────────────────────
+
+base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+data_dir = os.path.join(base_dir, "data")
+
+if not os.path.exists(os.path.join(data_dir, "pulse_survey_enriched.csv")):
+    with st.spinner("First run — generating data and running analysis pipeline. This takes about 30 seconds..."):
+        sys.path.insert(0, base_dir)
+        os.chdir(base_dir)
+        subprocess.run([sys.executable, "run_pipeline.py"], cwd=base_dir)
+    st.rerun()
 
 # ─── STYLING ──────────────────────────────────────────────────────────────────
 
