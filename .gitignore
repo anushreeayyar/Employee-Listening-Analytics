@@ -1,0 +1,21 @@
+# Generated data files (reproducible via run_pipeline.py)
+data/*.csv
+data/*.txt
+
+# Keep the data generator script
+!data/generate_survey_data.py
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+env/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
